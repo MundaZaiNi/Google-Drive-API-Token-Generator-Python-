@@ -1,21 +1,22 @@
-Google Drive API Token Generator (Python)
+Google Drive Token Generator (Python)
 
-A beginner-friendly Python project to authenticate with the Google Drive API and generate a local "token.pickle" file using Google's OAuth 2.0 authentication.
+""Python" (https://img.shields.io/badge/Python-3.10%2B-blue.svg)" (https://www.python.org/)
+""Google Drive API" (https://img.shields.io/badge/Google%20Drive-API-34A853.svg)" (https://developers.google.com/workspace/drive/api)
+""License: MIT" (https://img.shields.io/badge/License-MIT-yellow.svg)" (LICENSE)
 
-Created for developers who want to connect their Python applications to Google Drive.
+A simple Python utility to authenticate with the Google Drive API using OAuth 2.0 and generate a local "token.pickle" file.
 
-Features
+✨ Features
 
-- Google OAuth 2.0 authentication
-- Automatic browser-based login
-- Generates "token.pickle" locally
-- Reuses valid credentials
-- Refreshes expired credentials when possible
-- Windows, macOS and Linux setup instructions
-- Troubleshooting for common OAuth errors
-- Security-focused ".gitignore"
+- 🔐 Google OAuth 2.0 authentication
+- 🌐 Browser-based Google login
+- 🪙 Automatic local token generation
+- ♻️ Reuses valid credentials and refreshes expired tokens when possible
+- 💻 Windows, macOS and Linux support
+- 🛡️ Security-focused ".gitignore"
+- 📖 Beginner-friendly setup instructions
 
-Project Structure
+📁 Project Structure
 
 google-drive-token-generator/
 ├── generate_token.py
@@ -25,148 +26,147 @@ google-drive-token-generator/
 ├── LICENSE
 └── README.md
 
-File Description
+File| Description
+"generate_token.py"| Authenticates with Google and generates the token
+"requirements.txt"| Lists required Python libraries
+".gitignore"| Excludes private credentials and generated files
+".env.example"| Configuration notes
+"LICENSE"| MIT license
+"README.md"| Project documentation
 
-- "generate_token.py" — Main Python script for Google authentication and token generation.
-- "requirements.txt" — Required Python libraries.
-- ".gitignore" — Prevents credentials and token files from being committed.
-- ".env.example" — Example configuration notes.
-- "LICENSE" — MIT open-source license.
-- "README.md" — Project documentation and setup instructions.
-
-Requirements
+📋 Requirements
 
 - Python 3.10 or newer
 - A Google account
 - A Google Cloud project
 - Google Drive API enabled
-- OAuth Client ID with application type Desktop app
+- OAuth Client ID configured as Desktop app
 
-Step 1: Configure Google Cloud
+⚙️ Installation
+
+1. Clone the repository
+
+git clone https://github.com/MundaZaini/google-drive-token-generator.git
+cd google-drive-token-generator
+
+«Replace the repository URL with your actual GitHub repository URL if you choose a different name.»
+
+2. Create a virtual environment
+
+Windows (CMD):
+
+python -m venv .venv
+.venv\Scripts\activate
+
+macOS / Linux:
+
+python3 -m venv .venv
+source .venv/bin/activate
+
+3. Install dependencies
+
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+
+☁️ Google Cloud Setup
 
 1. Open "Google Cloud Console Credentials" (https://console.cloud.google.com/apis/credentials).
-2. Create or select a Google Cloud project.
+2. Create or select a project.
 3. Enable the "Google Drive API" (https://console.cloud.google.com/apis/library/drive.googleapis.com).
 4. Configure Google Auth Platform and the OAuth consent screen.
 5. Create an OAuth Client ID.
 6. Select Desktop app as the application type.
-7. Download the JSON credentials file.
+7. Download the OAuth JSON file.
 8. Rename it to "credentials.json".
-9. Place it in the same folder as "generate_token.py".
+9. Place it in the repository's root directory.
 
-Important: If your application is in Testing mode, add your Google account under Google Auth Platform → Audience → Test users.
+Testing Mode
 
-Step 2: Install Dependencies
+If your OAuth application is in Testing mode, open Google Auth Platform → Audience → Test users and add the Google account you will use to sign in.
 
-Windows
+🚀 Generate Your Token
 
-Open Command Prompt and run:
-
-cd /d "C:\Google API"
-python -m venv .venv
-.venv\Scripts\activate
-python -m pip install --upgrade pip
-python -m pip install -r requirements.txt
-
-Replace "C:\Google API" if your project is located in a different folder.
-
-macOS / Linux
-
-python3 -m venv .venv
-source .venv/bin/activate
-python -m pip install --upgrade pip
-python -m pip install -r requirements.txt
-
-Step 3: Generate the Token
-
-Make sure "credentials.json" is present in your project folder.
-
-Run:
+After placing "credentials.json" in the project folder, run:
 
 python generate_token.py
 
-Your browser should open automatically.
+A browser window should open.
 
-1. Select your Google account.
+1. Sign in to your Google account.
 2. Review the requested permissions.
-3. Approve access to Google Drive.
-4. Wait for the authentication process to finish.
+3. Approve access.
+4. Wait for authentication to complete.
 
-After successful authentication, "token.pickle" will be created locally.
+The script creates "token.pickle" in the project directory.
 
-OAuth Permissions
+🔑 OAuth Scope
 
-The default scope used by this project is:
+The default scope is:
 
 https://www.googleapis.com/auth/drive
 
-This scope provides broad Google Drive access.
+This grants broad access to Google Drive.
 
-For read-only applications, you can instead use:
+For read-only access, you can use:
 
 https://www.googleapis.com/auth/drive.readonly
 
-Choose the narrowest scope that meets your application's requirements. If you change scopes after generating a token, remove your local "token.pickle" and authenticate again.
+Change the scope in "generate_token.py" before authenticating. If you change scopes after creating a token, delete your local "token.pickle" and authenticate again.
 
-Troubleshooting
+🧰 Troubleshooting
 
-FileNotFoundError: credentials.json
+"FileNotFoundError: credentials.json"
 
-Make sure the credentials file:
+- Verify that the filename is exactly "credentials.json".
+- Place it beside "generate_token.py".
+- Confirm that the file belongs to your Desktop app OAuth client.
 
-- Is named exactly "credentials.json".
-- Is in the same folder as "generate_token.py".
-- Belongs to an OAuth client of type Desktop app.
+"Error 400: redirect_uri_mismatch"
 
-Error 400: redirect_uri_mismatch
+- Confirm the OAuth client type is Desktop app, not Web application.
+- Download the correct OAuth JSON file.
+- Replace the old local "credentials.json".
 
-- Check that the OAuth client type is Desktop app, not Web application.
-- Download the correct Desktop app credentials JSON.
-- Replace the old local "credentials.json" file.
+"Error 403: access_denied"
 
-Error 403: access_denied
+- Open Google Auth Platform → Audience.
+- Add your account under Test users if the application is in Testing mode.
+- Save and retry authentication.
 
-If your OAuth application is in Testing mode:
+Dependency installation errors
 
-1. Open Google Auth Platform.
-2. Select Audience.
-3. Add your Google account under Test users.
-4. Save the changes and try authentication again.
-
-Browser Does Not Open
-
-Check that your system has a default browser installed. Keep the Python script running while completing authentication.
-
-Package Installation Errors
-
-Upgrade pip and try again:
+Upgrade pip and use a supported Python version:
 
 python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 
-Use a supported Python version and a virtual environment when possible.
+🔒 Security
 
-Security Guidelines
+Never commit or share these files:
 
-- Never upload "credentials.json" to GitHub.
-- Never upload "token.pickle" to GitHub.
-- Never share OAuth client secrets, access tokens or refresh tokens.
-- Only load pickle files that you created or trust.
-- Use the narrowest OAuth permissions required.
-- Revoke Google account access if your credentials are exposed.
+- "credentials.json"
+- "token.pickle"
+- OAuth client secrets
+- Access tokens or refresh tokens
 
-The included ".gitignore" excludes common credentials and generated token files.
+These files are private. Each user must generate their own credentials and token.
 
-Official Documentation
+Only load pickle files that you created or trust. A malicious pickle file can execute code when loaded.
+
+The included ".gitignore" excludes common credential and token filenames. Always review files before publishing a public repository.
+
+📚 Official Documentation
 
 - "Google Drive API Python Quickstart" (https://developers.google.com/workspace/drive/api/quickstart/python)
 - "Google Cloud Credentials" (https://console.cloud.google.com/apis/credentials)
 - "Google Drive API Documentation" (https://developers.google.com/workspace/drive/api)
 
-License
+📄 License
 
-This project is distributed under the MIT License. See the "LICENSE" file for details.
+This project is licensed under the MIT License. See "LICENSE" (LICENSE) for details.
 
 ---
 
-Created by MundaZaini
+👨‍💻 Author
+
+MundaZaini
