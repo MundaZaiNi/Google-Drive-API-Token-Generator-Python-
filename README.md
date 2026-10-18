@@ -1,172 +1,131 @@
-Google Drive Token Generator (Python)
+# Google Drive Token Generator (Python)
 
-""Python" (https://img.shields.io/badge/Python-3.10%2B-blue.svg)" (https://www.python.org/)
-""Google Drive API" (https://img.shields.io/badge/Google%20Drive-API-34A853.svg)" (https://developers.google.com/workspace/drive/api)
-""License: MIT" (https://img.shields.io/badge/License-MIT-yellow.svg)" (LICENSE)
+A simple Python utility that authenticates with Google Drive using OAuth 2.0 and saves a local `token.pickle` file.
 
-A beginner-friendly Python utility to authenticate with Google Drive API using OAuth 2.0 and generate a local "token.pickle" file.
+**Created by MundaZaini**
 
-✨ Features
+## Features
 
 - Google OAuth 2.0 authentication
-- Browser-based Google login
-- Automatic token generation
+- Browser-based sign-in
+- Local token generation
 - Credential refresh when supported
-- Windows, macOS, and Linux support
-- Security-focused ".gitignore"
-- Beginner-friendly documentation
+- Windows, macOS, and Linux instructions
+- Security-focused `.gitignore`
 
-📁 Project Structure
+## Project Files
 
-google-drive-token-generator/
-├── generate_token.py
-├── requirements.txt
-├── .gitignore
-├── .env.example
-├── LICENSE
-└── README.md
+- `generate_token.py` — Authenticates with Google and saves the token.
+- `requirements.txt` — Lists required Python packages.
+- `.gitignore` — Excludes private credentials and generated token files.
+- `.env.example` — Configuration notes.
+- `LICENSE` — MIT license.
+- `README.md` — Project documentation.
 
-📋 File Descriptions
-
-File| Description
-"generate_token.py"| Authenticates with Google and generates the token
-"requirements.txt"| Lists required Python libraries
-".gitignore"| Excludes private credentials and generated files
-".env.example"| Contains configuration notes
-"LICENSE"| MIT open-source license
-"README.md"| Project documentation
-
-📌 Requirements
+## Requirements
 
 - Python 3.10 or newer
 - A Google account
 - A Google Cloud project
 - Google Drive API enabled
-- OAuth Client ID configured as Desktop app
+- OAuth Client ID with application type **Desktop app**
 
-⚙️ Installation
+## 1. Google Cloud Setup
 
-1. Clone the repository
+1. Open [Google Cloud Credentials](https://console.cloud.google.com/apis/credentials).
+2. Create or select a project.
+3. Enable the [Google Drive API](https://console.cloud.google.com/apis/library/drive.googleapis.com).
+4. Configure Google Auth Platform if prompted.
+5. Create an OAuth Client ID and select **Desktop app**.
+6. Download the JSON credentials file.
+7. Rename it to `credentials.json` and put it beside `generate_token.py`.
 
-Replace "YOUR_USERNAME" with your GitHub username.
+If the app is in Testing mode, add your account under **Google Auth Platform → Audience → Test users**.
 
-git clone https://github.com/YOUR_USERNAME/google-drive-token-generator.git
-cd google-drive-token-generator
+## 2. Install on Windows
 
-2. Create a virtual environment
+Open Command Prompt in the project folder and run:
 
-Windows CMD:
-
+```cmd
 python -m venv .venv
 .venv\Scripts\activate
-
-macOS / Linux:
-
-python3 -m venv .venv
-source .venv/bin/activate
-
-3. Install dependencies
-
 python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
+```
 
-☁️ Google Cloud Setup
+## 3. Install on macOS or Linux
 
-1. Open "Google Cloud Credentials" (https://console.cloud.google.com/apis/credentials).
-2. Create or select a project.
-3. Enable the "Google Drive API" (https://console.cloud.google.com/apis/library/drive.googleapis.com).
-4. Configure Google Auth Platform and the OAuth consent screen.
-5. Create an OAuth Client ID.
-6. Select Desktop app as the application type.
-7. Download the JSON credentials file.
-8. Rename it to "credentials.json".
-9. Place it beside "generate_token.py".
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+```
 
-Testing mode: If your app is in Testing mode, add your Google account under Google Auth Platform → Audience → Test users.
+## 4. Generate the Token
 
-🚀 Generate Your Token
+Make sure `credentials.json` is in the same folder as `generate_token.py`, then run:
 
-Run the following command from the project folder:
-
+```bash
 python generate_token.py
+```
 
-Your browser should open.
+A browser should open. Sign in with your Google account and approve the requested permissions. After successful authentication, `token.pickle` is saved in the project folder.
 
-1. Sign in with your Google account.
-2. Review the requested permissions.
-3. Approve access to Google Drive.
-4. Wait for authentication to finish.
-
-The script saves "token.pickle" in the project folder.
-
-🔑 OAuth Permissions
+## OAuth Scope
 
 The default scope is:
 
-"https://www.googleapis.com/auth/drive"
+`https://www.googleapis.com/auth/drive`
 
-This grants broad Google Drive access.
+This grants broad Drive access. For read-only access, change the scope in the script to:
 
-For read-only access, use:
+`https://www.googleapis.com/auth/drive.readonly`
 
-"https://www.googleapis.com/auth/drive.readonly"
+If you change scopes after creating a token, delete your local `token.pickle` and authenticate again.
 
-Change the scope in "generate_token.py" before authenticating. If you change scopes after generating a token, delete your local "token.pickle" and authenticate again.
+## Troubleshooting
 
-🛠️ Troubleshooting
+### `FileNotFoundError: credentials.json`
 
-"FileNotFoundError: credentials.json"
+Check that the file is named exactly `credentials.json` and is in the same folder as the script.
 
-- Check the filename.
-- Put the file beside "generate_token.py".
-- Use credentials from a Desktop app OAuth client.
+### `Error 400: redirect_uri_mismatch`
 
-"Error 400: redirect_uri_mismatch"
+Use a **Desktop app** OAuth client, not a Web application client. Download the matching JSON file again.
 
-- Confirm the client type is Desktop app, not Web application.
-- Download the correct OAuth JSON file.
-- Replace the old local "credentials.json".
+### `Error 403: access_denied`
 
-"Error 403: access_denied"
+If the app is in Testing mode, add the Google account you use to sign in under **Audience → Test users**.
 
-- Open Google Auth Platform → Audience.
-- Add your account under Test users if the app is in Testing mode.
-- Save and retry authentication.
+### Package installation errors
 
-Package installation errors
-
+```bash
 python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
+```
 
-Use a supported Python version and a virtual environment.
-
-🔒 Security
+## Security
 
 Never upload these files to a public repository:
 
-- "credentials.json"
-- "token.pickle"
+- `credentials.json`
+- `token.pickle`
 - OAuth client secrets
 - Access tokens or refresh tokens
 
-Each user must create their own OAuth credentials and token.
+Each user must create their own OAuth credentials and token. Only load pickle files you created or trust, because malicious pickle files can execute code.
 
-Only load pickle files that you created or trust. A malicious pickle file can execute code when loaded.
+## Official Documentation
 
-The included ".gitignore" excludes common credentials and generated token files. Always review files before publishing.
+- [Google Drive API Python Quickstart](https://developers.google.com/workspace/drive/api/quickstart/python)
+- [Google Cloud Credentials](https://console.cloud.google.com/apis/credentials)
+- [Google Drive API Documentation](https://developers.google.com/workspace/drive/api)
 
-📚 Official Documentation
+## License
 
-- "Google Drive API Python Quickstart" (https://developers.google.com/workspace/drive/api/quickstart/python)
-- "Google Cloud Credentials" (https://console.cloud.google.com/apis/credentials)
-- "Google Drive API Documentation" (https://developers.google.com/workspace/drive/api)
-
-📄 License
-
-This project is licensed under the MIT License. See "LICENSE" (LICENSE) for details.
+This project is licensed under the MIT License. See `LICENSE` for details.
 
 ---
 
-👨‍💻 Author
-
-MundaZaini
+**Created by MundaZaini**
